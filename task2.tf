@@ -118,10 +118,9 @@ connection {
 }
 provisioner "remote-exec" {
     inline = [
-      "sudo yum -y install nfs-utils",
-      "sudo echo ${aws_efs_file_system.efs.dns_name}:/var/www/html efs defaults,_netdev 0 0 >> sudo /etc/fstab",
-      "sudo mount  ${aws_efs_file_system.efs.dns_name}:/  /var/www/html",
-      "sudo git clone https://github.com/suhaib-ansari/cloud.git  /var/www/html",
+      "sudo mount -t nfs4 ${aws_efs_mount_target.mount.ip_address}:/ /var/www/html",
+      #"sudo rm  -rf /var/www/html*",
+      "sudo git clone https://github.com/suhaib-ansari/cloud.git /var/www/html",
       
     ]
   }
